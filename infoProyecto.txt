@@ -1,0 +1,7 @@
+***********RECURSOS UTILIZADOS***********
+
+Version PHP: 7.2.15
+Version Apache: 2.4.38
+Servidor Local: XAMPP Version: v3.2.3
+
+Nombre de la BD: emkode.sql
