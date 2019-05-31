@@ -1,4 +1,3 @@
-// CODIGO CREADO POR BRAULIO ARAMBULA MARTINEZ
 $( document ).ready(function() {
 
     var pagina = 1;
@@ -14,7 +13,7 @@ $( document ).ready(function() {
             url: url+'res/api/obtenerInfo.php',
             data: {pagina:pagina}
         }).done(function(data){
-            total_pagina = Math.ceil(data.total/5);
+            total_pagina = Math.ceil(data.total/10);
             pagina_actual = pagina;
             $('#pagination').twbsPagination({
                 totalPages: total_pagina,
@@ -44,9 +43,24 @@ $( document ).ready(function() {
         });
     }
 
+    function obtenerInfoPaginaEsp(busqueda) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: url+'res/api/obtenerInfoEsp.php',
+           data: {pagina:pagina,busqueda:busqueda}
+        }).done(function(data){
+            administraFila(data.data);
+        });
+    }
+
     function administraFila(data) {
-        console.log(data);
         var	rows = '';
+        if(jQuery.isEmptyObject(data)){
+            alert("Sin resultados de busqueda");
+            obtenerInfoPagina();
+        }
+        else{
         $.each( data, function( key, value ) {
             rows = rows + '<tr>';
             rows = rows + '<td>'+value.nombre+'</td>';
@@ -54,13 +68,14 @@ $( document ).ready(function() {
             rows = rows + '<td>'+value.email+'</td>';
             rows = rows + '<td>'+value.telefono+'</td>';
             rows = rows + '<td data-id="'+value.id+'">';
-            rows = rows + '<button data-toggle="modal" data-target="#actEmpleado" class="btn btn-primary actEmpleado">ACTUALIZAR</button> ';
+            rows = rows + '<button data-toggle="modal" data-target="#actEmpleado" class="btn btn-primary actEmpleado" onclick="document.getElementById(\'inputActNombre\').focus();">ACTUALIZAR</button> ';
             rows = rows + '<button class="btn btn-danger eliminaEmpleado">ELIMINAR</button>';
             rows = rows + '</td>';
             rows = rows + '</tr>';
         });        
         
         $("tbody").html(rows);
+    }
     }
 
     /* AGREGA EMPLEADO */
@@ -98,6 +113,28 @@ $( document ).ready(function() {
         }
         else
             alert('Rellena todos los campos obligatorios');
+    });
+
+    /* BUSCA EMPLEADO */
+    $(".crud-submit-show").click(function(e){
+        e.preventDefault();
+        var form_action = $("#busquedaEmpleado").find("form").attr("action");
+        var busqueda = $("#busquedaEmpleado").find("input[name='inputBusqueda']").val();
+        if(busqueda != ''){
+            $.ajax({
+                dataType: 'json',
+                type:'POST',
+                url: url + form_action,
+                data:{busqueda:busqueda}
+            }).done(function(data){
+                $("#busquedaEmpleado").find("input[name='inputBusqueda']").val('');
+                obtenerInfoPaginaEsp(busqueda);
+            }).fail(function(){
+                alert("FALLA INTERNA DEL SERVIDOR");
+            });
+        }
+        else
+            alert('Nada que buscar');
     });
 
     /* ELIMINA EMPLEADO */

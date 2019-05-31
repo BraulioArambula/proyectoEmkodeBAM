@@ -1,4 +1,3 @@
-<!-- CODIGO CREADO POR BRAULIO ARAMBULA MARTINEZ -->
 <!DOCTYPE HTML5>
 <html>
 	<head>
@@ -35,19 +34,39 @@
 	</head>
 	<body>
 		<div style="padding-top: 2%;"></div>
-		<div class="container" style="padding-top: 2%;background-color: rgba(67,81,135, 0.8);">
+		<div class="container" style="padding-top: 2%;padding-bottom: 1%;background-color: rgba(67,81,135, 0.8);">
 			<div class="row">
 		    	<div class="col-sm-6" style="text-align: left;">
 					<h1 class="text-white">LISTADO DE EMPLEADOS</h1>
 		    	</div>
 		    	<div class="col-sm-6" style="text-align: right;">
-					<a class="btn btn-success" data-toggle="modal" href="#nuevoEmpleado">
+					<a class="btn btn-success" onclick="document.getElementById('inputNombre').focus();" data-toggle="modal" href="#nuevoEmpleado">
 						<i class="material-icons"></i>
 						<span>NUEVO EMPLEADO</span>
 					</a>
 				</div>
 			</div>
 		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-8"></div>
+		    	<div class="col-sm-4">
+		    		<br>
+		    		<div id="busquedaEmpleado">
+		    			<form action="res/api/muestra.php" method="POST">
+		    				<div class="input-group">
+		    					<input type="text" class="form-control validate" id="inputBusqueda" name="inputBusqueda" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="BUSCAR" required />
+            					<button id="buttonSearch" class="crud-submit-show col-md-auto btn btn-success" type="submit" title="Buscar">
+	              					<i class="large material-icons">search</i>
+    	        				</button>
+		    				</div>
+		      			</form>
+		      		</div>
+		    	</div>
+			</div>
+		</div>
+		
 		<div class="container" style="padding-top: 2%;">
 			<table class="table table-bordered">
 				<thead>

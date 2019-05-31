@@ -1,4 +1,3 @@
-<!-- CODIGO CREADO POR BRAULIO ARAMBULA MARTINEZ -->
 <?php
 	require 'configuracionBD.php';
   	
